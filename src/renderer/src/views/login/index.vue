@@ -1,8 +1,7 @@
-<script setup lang="ts"></script>
-
 <template>
-  <div>Login</div>
-  <a-button type="primary">Primary</a-button>
+  <div>123</div>
 </template>
+
+<script setup lang="ts"></script>
 
 <style scoped></style>

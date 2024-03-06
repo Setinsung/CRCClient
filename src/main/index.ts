@@ -2,12 +2,15 @@ import { app, shell, BrowserWindow, ipcMain } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
+let mainWinId: number | undefined
 
 function createWindow(): void {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
-    width: 1280,
-    height: 768,
+    width: 771,
+    height: 545,
+    frame: false,
+    resizable: false,
     show: false,
     autoHideMenuBar: true,
     ...(process.platform === 'linux' ? { icon } : {}),
@@ -33,6 +36,7 @@ function createWindow(): void {
   } else {
     mainWindow.loadFile(join(__dirname, '../renderer/index.html'))
   }
+  mainWinId = mainWindow.id
 }
 
 // This method will be called when Electron has finished
@@ -51,6 +55,60 @@ app.whenReady().then(() => {
 
   // IPC test
   ipcMain.on('ping', () => console.log('pong'))
+
+  // close app
+  ipcMain.on('close-app', () => {
+    if (mainWinId) {
+      const mainWindow = BrowserWindow.fromId(mainWinId)
+      if (mainWindow) {
+        mainWindow.close()
+      }
+    }
+  })
+
+  // minimize app
+  ipcMain.on('min-app', () => {
+    if (mainWinId) {
+      const mainWindow = BrowserWindow.fromId(mainWinId)
+      if (mainWindow) {
+        mainWindow.minimize()
+      }
+    }
+  })
+
+  // resize window
+  ipcMain.on('resize-full-window', () => {
+    if (mainWinId) {
+      const mainWindow = BrowserWindow.fromId(mainWinId)
+      if (mainWindow) {
+        mainWindow.setSize(1280, 768)
+        mainWindow.setMaximumSize(1280, 768)
+        mainWindow.setMinimumSize(1280, 768)
+        mainWindow.setResizable(true)
+        mainWindow.center()
+      }
+    }
+  })
+
+  ipcMain.on('resize-common-window', () => {
+    if (mainWinId) {
+      const mainWindow = BrowserWindow.fromId(mainWinId)
+      if (mainWindow) {
+        mainWindow.setSize(771, 545)
+        mainWindow.setMaximumSize(771, 545)
+        mainWindow.setMinimumSize(771, 545)
+        mainWindow.setResizable(false)
+        mainWindow.center()
+      }
+    }
+  })
+
+  ipcMain.on('custom-adsorption', (event, res) => {
+    if (mainWinId) {
+      const mainWindow = BrowserWindow.fromId(mainWinId)
+      mainWindow?.setPosition(res.appX, res.appY)
+    }
+  })
 
   createWindow()
 
