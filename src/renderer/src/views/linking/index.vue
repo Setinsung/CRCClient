@@ -7,11 +7,9 @@ const remote_url = ref('')
 
 remote_url.value = route.query.url as string
 window.electron.ipcRenderer.send('resize-full-window')
-alert('变大')
 
 const returnHome = () => {
   window.electron.ipcRenderer.send('resize-common-window')
-  alert('变小')
   router.go(-1)
 }
 </script>
@@ -25,7 +23,7 @@ const returnHome = () => {
       </a-button>
       <div class="url-txt">url：{{ remote_url }}</div>
     </div>
-    <!-- <iframe class="iframe" :src="remote_url" frameborder="0"></iframe> -->
+    <iframe class="iframe" :src="remote_url" frameborder="0"></iframe>
   </div>
 </template>
 

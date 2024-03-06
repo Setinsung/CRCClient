@@ -10,7 +10,6 @@ function createWindow(): void {
     width: 771,
     height: 545,
     frame: false,
-    resizable: false,
     show: false,
     autoHideMenuBar: true,
     ...(process.platform === 'linux' ? { icon } : {}),
@@ -81,10 +80,9 @@ app.whenReady().then(() => {
     if (mainWinId) {
       const mainWindow = BrowserWindow.fromId(mainWinId)
       if (mainWindow) {
-        mainWindow.setSize(1280, 768)
-        mainWindow.setMaximumSize(1280, 768)
-        mainWindow.setMinimumSize(1280, 768)
         mainWindow.setResizable(true)
+        mainWindow.setSize(1280, 768)
+        mainWindow.setMinimumSize(1280, 768)
         mainWindow.center()
       }
     }
@@ -97,16 +95,8 @@ app.whenReady().then(() => {
         mainWindow.setSize(771, 545)
         mainWindow.setMaximumSize(771, 545)
         mainWindow.setMinimumSize(771, 545)
-        mainWindow.setResizable(false)
         mainWindow.center()
       }
-    }
-  })
-
-  ipcMain.on('custom-adsorption', (event, res) => {
-    if (mainWinId) {
-      const mainWindow = BrowserWindow.fromId(mainWinId)
-      mainWindow?.setPosition(res.appX, res.appY)
     }
   })
 

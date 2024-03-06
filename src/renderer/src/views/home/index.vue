@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 const minimize = () => {
   window.electron.ipcRenderer.send('min-app')
 }
