@@ -10,7 +10,10 @@ const close = () => {
 <template>
   <div class="home">
     <div class="window-bar">
-      <div class="logo">CRCClient</div>
+      <div class="logo">
+        <img class="logo-ico" src="../../assets/images/icon.png" alt="" />
+        <img class="logo-font" src="../../assets/images/icon_font.png" alt="" />
+      </div>
       <div class="window-ctls">
         <div class="blank-place"></div>
         <div class="btn-group">
@@ -57,11 +60,12 @@ const close = () => {
 }
 
 .window-bar {
-  height: 6vh;
+  height: 7vh;
   display: flex;
   justify-content: space-between;
 
   .logo {
+    padding-top: 5px;
     display: flex;
     align-items: flex-end;
     justify-content: center;
@@ -69,6 +73,16 @@ const close = () => {
     height: 100%;
     border-right: 1px solid #9face656;
     -webkit-app-region: drag;
+
+    .logo-ico {
+      height: 30px;
+    }
+
+    .logo-font {
+      height: 20px;
+      padding-left: 2px;
+      padding-bottom: 5px;
+    }
   }
 
   .window-ctls {
@@ -102,7 +116,7 @@ const close = () => {
 .content {
   display: flex;
   width: 100vw;
-  height: 94vh;
+  height: 93vh;
 
   .left-zone {
     display: flex;
