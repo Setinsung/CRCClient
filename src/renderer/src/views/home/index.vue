@@ -32,7 +32,7 @@ const close = () => {
           <a-avatar :size="64" :style="{ backgroundColor: '#3370ff' }">
             <icon-user />
           </a-avatar>
-          <div class="name">张三</div>
+          <div class="name">立即登录</div>
         </div>
         <div class="nav">
           <router-link ondragstart="return false" to="/home/remoteControl">
@@ -47,6 +47,7 @@ const close = () => {
             <icon-settings size="22" />
             <span>参数设置</span>
           </router-link>
+          <div class="background-animation"></div>
         </div>
       </div>
       <router-view class="right-zone"></router-view>
@@ -94,6 +95,7 @@ const close = () => {
       flex: 1;
       -webkit-app-region: drag;
     }
+
     .btn-group {
       height: 100%;
 
@@ -140,10 +142,11 @@ const close = () => {
     }
 
     .nav {
+      position: relative;
       display: flex;
       flex-direction: column;
       padding: 10px;
-      padding-top: 30px;
+      margin-top: 30px;
 
       a {
         display: flex;
@@ -151,15 +154,17 @@ const close = () => {
         justify-content: center;
         text-align: center;
         line-height: 43px;
-        height: 43px;
+        width: 118.67px;
+        height: 48px;
         background-color: transparent;
-        margin: 5px;
+        margin: 0 5px;
         border-radius: 15px;
         color: #555f87;
+        z-index: 10;
         user-select: none;
+        transition: color 0.3s;
 
         &.router-link-active {
-          background-color: #9face638;
           color: #5272ff;
         }
 
@@ -167,9 +172,45 @@ const close = () => {
           color: #5272ff;
         }
 
+        &:nth-child(1):hover ~ .background-animation {
+          top: 11px;
+        }
+
+        &:nth-child(2):hover ~ .background-animation {
+          top: 60px;
+        }
+
+        &:nth-child(3):hover ~ .background-animation {
+          top: 108px;
+        }
+
+        &:nth-child(1).router-link-active ~ .background-animation {
+          top: 11px;
+        }
+
+        &:nth-child(2).router-link-active ~ .background-animation {
+          top: 60px;
+        }
+
+        &:nth-child(3).router-link-active ~ .background-animation {
+          top: 108px;
+        }
+
         span {
           padding-left: 3px;
         }
+      }
+
+      .background-animation {
+        position: absolute;
+        top: 11px;
+        left: 15px;
+        width: 118.67px;
+        height: 43px;
+        background-color: #9face638;
+        border-radius: 15px;
+        z-index: 9;
+        transition: all 0.25s;
       }
     }
   }
