@@ -39,9 +39,9 @@ const close = () => {
             <icon-computer size="22" />
             <span>远程连接</span>
           </router-link>
-          <router-link to="/home/deviceList">
-            <icon-sort size="22" />
-            <span>设备列表</span>
+          <router-link to="/home/terminalConn">
+            <icon-code-square size="22" />
+            <span>终端连接</span>
           </router-link>
           <router-link to="/home/settings">
             <icon-settings size="22" />

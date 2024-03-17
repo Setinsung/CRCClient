@@ -1,58 +1,63 @@
-<script setup lang="ts">
-import { ref } from 'vue'
-import { useRouter } from 'vue-router'
-const router = useRouter()
-
-const input_url = ref('')
-
-const startLink = () => {
-  // alert(input_url.value)
-  router.push({ path: '/linking', query: { url: input_url.value } })
-}
-</script>
+<script setup lang="ts"></script>
 
 <template>
-  <div class="remote-ctl">
-    <h2>发起连接</h2>
-    <a-input v-model="input_url" class="url-input" placeholder="Please enter the url" allow-clear />
-    <a-button class="link_btn" type="primary" @click="startLink">
-      <icon-link size="24" />
-      <span>发起连接</span>
-    </a-button>
+  <div class="content">
+    <div class="nav">
+      <router-link to="/home/remoteControl/deviceListConn"><span>设备列表</span></router-link>
+      <router-link to="/home/remoteControl/manualConn"><span>手动连接</span><i></i></router-link>
+    </div>
+    <router-view></router-view>
   </div>
 </template>
 
-<style scoped>
-.remote-ctl {
+<style scoped lang="less">
+.content {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  padding-left: 25px;
 
-  .url-input {
-    width: 55%;
-    height: 50px;
-    margin-top: 40px;
-    margin-bottom: 20px;
-  }
-  .link_btn {
-    align-items: center;
-    width: 55%;
-    height: 50px;
-    background-color: #5272ff;
-    border-radius: 5px;
-    &:hover {
-      background-color: #254dfe;
-    }
-    span {
-      padding-left: 5px;
-      font-size: larger;
-    }
-  }
+  .nav {
+    display: flex;
+    padding: 10px;
 
-  iframe {
-    height: 100%;
-    width: 100%;
+    a {
+      position: relative;
+      align-items: center;
+      background-color: transparent;
+      margin: 0 10px;
+      width: 80px;
+      font-size: 18px;
+      color: #555f87;
+      z-index: 10;
+      user-select: none;
+      transition: color 0.2s;
+
+      &.router-link-active {
+        span {
+          position: relative;
+          z-index: 9;
+          color: #000;
+          font-size: 19px;
+          font-weight: 700;
+        }
+
+        &::after {
+          position: absolute;
+          content: '';
+          left: 2px;
+          bottom: 2px;
+          width: 90%;
+          height: 5px;
+          z-index: 8;
+          background-image: linear-gradient(to right, #8ba0ff 10%, #fff 90%);
+        }
+      }
+
+      &:hover {
+        color: #000;
+        font-size: 19px;
+      }
+    }
   }
 }
 </style>
