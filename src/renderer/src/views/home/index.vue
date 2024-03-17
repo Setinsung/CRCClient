@@ -49,6 +49,10 @@ const close = () => {
           </router-link>
           <div class="background-animation"></div>
         </div>
+        <div class="connect-state">
+          <icon-sync size="16" spin />
+          <span>正在连接服务器...</span>
+        </div>
       </div>
       <router-view class="right-zone"></router-view>
     </div>
@@ -130,11 +134,14 @@ const close = () => {
 
     .user {
       display: flex;
-      padding-top: 40px;
+      margin-top: 40px;
+      margin-bottom: 20px;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      height: 28vh;
+      height: 24vh;
+      user-select: none;
+      cursor: pointer;
 
       .name {
         padding-top: 10px;
@@ -146,7 +153,6 @@ const close = () => {
       display: flex;
       flex-direction: column;
       padding: 10px;
-      margin-top: 30px;
 
       a {
         display: flex;
@@ -211,6 +217,22 @@ const close = () => {
         border-radius: 15px;
         z-index: 9;
         transition: all 0.25s;
+      }
+    }
+
+    .connect-state {
+      position: fixed;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: #555f87;
+      padding: 10px 0 15px 15px;
+      bottom: 0;
+      user-select: none;
+
+      .arco-icon-sync {
+        color: #5272ff;
       }
     }
   }
