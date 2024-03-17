@@ -7,8 +7,8 @@ let mainWinId: number | undefined
 function createWindow(): void {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
-    width: 771,
-    height: 545,
+    minWidth: 771,
+    minHeight: 545,
     frame: false,
     show: false,
     autoHideMenuBar: true,
@@ -78,26 +78,18 @@ app.whenReady().then(() => {
 
   // resize window
   ipcMain.on('resize-full-window', () => {
-    if (mainWinId) {
-      const mainWindow = BrowserWindow.fromId(mainWinId)
-      if (mainWindow) {
-        mainWindow.setResizable(true)
-        mainWindow.setSize(1280, 768)
-        mainWindow.setMinimumSize(1280, 768)
-        mainWindow.center()
-      }
+    const currentWindow = BrowserWindow.getFocusedWindow()
+    if (currentWindow) {
+      currentWindow.setSize(1280, 768)
+      currentWindow.center()
     }
   })
 
   ipcMain.on('resize-common-window', () => {
-    if (mainWinId) {
-      const mainWindow = BrowserWindow.fromId(mainWinId)
-      if (mainWindow) {
-        mainWindow.setSize(771, 545)
-        mainWindow.setMaximumSize(771, 545)
-        mainWindow.setMinimumSize(771, 545)
-        mainWindow.center()
-      }
+    const currentWindow = BrowserWindow.getFocusedWindow()
+    if (currentWindow) {
+      currentWindow.setSize(771, 545)
+      currentWindow.center()
     }
   })
 

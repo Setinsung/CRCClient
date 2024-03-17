@@ -1,9 +1,9 @@
 <script setup lang="ts">
 const minimize = () => {
-  window.electron.ipcRenderer.send('min-app')
+  window.api.minApp()
 }
 const close = () => {
-  window.electron.ipcRenderer.send('close-app')
+  window.api.closeApp()
 }
 </script>
 

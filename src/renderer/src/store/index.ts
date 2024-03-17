@@ -1,5 +1,5 @@
-import useTestmStore from './modules/testm'
+import useUserStore from './modules/user'
 
 export default () => ({
-  testmStore: useTestmStore()
+  userStore: useUserStore()
 })
