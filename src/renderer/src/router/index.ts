@@ -4,6 +4,7 @@ const router = createRouter({
   routes: [
     { path: '/', redirect: '/home/remoteControl' },
     { path: '/login', component: () => import('../views/login/index.vue') },
+    { path: '/loading', component: () => import('../views/loading/index.vue') },
     {
       path: '/home',
       component: () => import('../views/home/index.vue'),

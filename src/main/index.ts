@@ -3,8 +3,9 @@ import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
 let mainWinId: number | undefined
+let loadingWinId: number | undefined
 
-function createWindow(): void {
+const createWindow = () => {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
     minWidth: 771,
@@ -20,15 +21,25 @@ function createWindow(): void {
     }
   })
 
-  mainWindow.on('ready-to-show', () => {
-    mainWindow.show()
+  // mainWindow.on('ready-to-show', () => {
+  //   mainWindow.show()
+  // })
+
+  mainWindow.once('ready-to-show', () => {
+    if (loadingWinId) {
+      const loadingWindow = BrowserWindow.fromId(loadingWinId)
+      loadingWindow?.hide()
+      loadingWindow?.close()
+      mainWindow.show()
+    }
   })
 
   mainWindow.webContents.setWindowOpenHandler((details) => {
     shell.openExternal(details.url)
     return { action: 'deny' }
   })
-
+  // 模拟启动时间
+  // setTimeout(() => {
   // HMR for renderer base on electron-vite cli.
   // Load the remote URL for development or the local html file for production.
   if (is.dev && process.env['ELECTRON_RENDERER_URL']) {
@@ -36,7 +47,33 @@ function createWindow(): void {
   } else {
     mainWindow.loadFile(join(__dirname, '../renderer/index.html'))
   }
+  // }, 200000)
+
   mainWinId = mainWindow.id
+}
+
+// 加载窗口
+const createLoadingWindow = (cb: () => void) => {
+  const loadingWindow = new BrowserWindow({
+    show: false,
+    frame: false,
+    width: 200,
+    height: 240,
+    resizable: false,
+    icon: icon,
+    transparent: true
+  })
+
+  loadingWindow.once('show', cb)
+  if (is.dev) {
+    loadingWindow.loadURL('http://localhost:5173/#/loading')
+  } else {
+    loadingWindow.loadFile(join(__dirname, `../renderer/index.html/#/loading`))
+  }
+  loadingWindow.on('ready-to-show', () => {
+    loadingWindow.show()
+  })
+  loadingWinId = loadingWindow.id
 }
 
 // This method will be called when Electron has finished
@@ -68,11 +105,9 @@ app.whenReady().then(() => {
 
   // minimize app
   ipcMain.on('min-app', () => {
-    if (mainWinId) {
-      const mainWindow = BrowserWindow.fromId(mainWinId)
-      if (mainWindow) {
-        mainWindow.minimize()
-      }
+    const currentWindow = BrowserWindow.getFocusedWindow()
+    if (currentWindow) {
+      currentWindow.minimize()
     }
   })
 
@@ -93,7 +128,8 @@ app.whenReady().then(() => {
     }
   })
 
-  createWindow()
+  // createWindow()
+  createLoadingWindow(createWindow)
 
   app.on('activate', function () {
     // On macOS it's common to re-create a window in the app when the
