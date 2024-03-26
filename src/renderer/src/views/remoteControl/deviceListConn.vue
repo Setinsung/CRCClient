@@ -16,7 +16,11 @@ const deviceList = [
   'UOS-DFJ23NKM'
 ]
 const onDeviceChoose = (index: number) => {
-  choosedDeviceIndex.value = index
+  console.log('choosedDeviceIndex.value', choosedDeviceIndex.value)
+  console.log('index', index)
+
+  if (choosedDeviceIndex.value === index) choosedDeviceIndex.value = null
+  else choosedDeviceIndex.value = index
 }
 </script>
 <template>
@@ -32,7 +36,10 @@ const onDeviceChoose = (index: number) => {
       <div
         v-for="(item, index) in deviceList"
         :key="index"
-        :class="['device-item', index != null && index == choosedDeviceIndex && 'show-btns']"
+        :class="[
+          'device-item',
+          choosedDeviceIndex != null && index == choosedDeviceIndex && 'show-btns'
+        ]"
         @click="onDeviceChoose(index)"
       >
         <div class="device-img">
