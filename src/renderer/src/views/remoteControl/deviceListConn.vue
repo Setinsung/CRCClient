@@ -1,51 +1,65 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-
+import useStore from '../../store'
+import { useRouter } from 'vue-router'
+const router = useRouter()
+const { containerStore } = useStore()
 const choosedDeviceIndex = ref<number | null>(null)
 
-const deviceList = [
-  'UOS-RG92FJ4D',
-  'UOS-67KR0DB2',
-  'KylinOS-PLN31FJ8',
-  'KylinOS-32FJ0K9D',
-  'UOS-9D8G1KLO',
-  'UOS-R9GK0DF4',
-  'KylinOS-KJDF046G',
-  'KylinOS-0NGM2JFD',
-  'UOS-7JKL4K0D',
-  'UOS-DFJ23NKM'
-]
-const onDeviceChoose = (index: number) => {
-  console.log('choosedDeviceIndex.value', choosedDeviceIndex.value)
-  console.log('index', index)
-
+// 容器选中
+const onDeviceChoose = (index: number, state: string) => {
+  if (state !== 'Running') return
   if (choosedDeviceIndex.value === index) choosedDeviceIndex.value = null
   else choosedDeviceIndex.value = index
 }
+
+// 容器标签颜色
+const getDeviceTagColor = (image: string) => {
+  const imageType = image.substring(0, image.indexOf(':'))
+  if (imageType === 'uos') return 'blue'
+  else if (imageType === 'kylin') return 'red'
+  else return 'gray'
+}
+
+// 发起连接
+const onConnectDesktop = async (id: number) => {
+  await containerStore.getContainerDetailedInfoAction(id)
+  router.push({
+    path: '/linking',
+    query: { url: 'http://192.168.1.103' + containerStore.containerInfo.accessUrl }
+  })
+}
+
+// init
+containerStore.getContainerListAciton()
 </script>
 <template>
   <div class="content">
     <div class="device-type">
-      <a-radio-group>
-        <a-radio :default-checked="true" value="A">全部设备</a-radio>
-        <a-radio value="B">历史设备</a-radio>
+      <a-radio-group v-model="containerStore.devicesMode">
+        <a-radio :default-checked="true" value="1">全部设备</a-radio>
+        <a-radio value="2">历史设备</a-radio>
       </a-radio-group>
     </div>
-
     <div class="device-list">
       <div
-        v-for="(item, index) in deviceList"
-        :key="index"
+        v-for="item in containerStore.containerList"
+        :key="item.id"
         :class="[
           'device-item',
-          choosedDeviceIndex != null && index == choosedDeviceIndex && 'show-btns'
+          choosedDeviceIndex != null && item.id == choosedDeviceIndex && 'show-btns'
         ]"
-        @click="onDeviceChoose(index)"
       >
-        <div class="device-img">
-          <img src="../../assets/images/default_desktop.jpeg" />
+        <div class="device-tags">
+          <a-tag :color="getDeviceTagColor(item.image)" size="small">{{ item.image }}</a-tag>
+        </div>
+        <div class="device-img" @click="onDeviceChoose(item.id, item.state)">
+          <img
+            :class="[item.state !== 'Running' && 'img-gray']"
+            src="../../assets/images/default_desktop.jpeg"
+          />
           <div class="operation-btns">
-            <a-button type="primary" size="small">
+            <a-button type="primary" size="small" @click="onConnectDesktop(item.id)">
               <span>连接桌面</span>
             </a-button>
             <a-button type="primary" size="small">
@@ -61,7 +75,7 @@ const onDeviceChoose = (index: number) => {
               showTooltip: true
             }"
           >
-            {{ item }}
+            {{ item.name }}
           </a-typography-paragraph>
           <div class="device-more"><icon-more :rotate="90" /></div>
         </div>
@@ -89,7 +103,7 @@ const onDeviceChoose = (index: number) => {
     flex-wrap: wrap;
     height: 70vh;
     overflow-x: hidden;
-    overflow-y: scroll;
+    overflow-y: auto;
 
     .device-item {
       position: relative;
@@ -101,6 +115,15 @@ const onDeviceChoose = (index: number) => {
       border-radius: 5px;
       overflow: hidden;
       transition: all 0.5s;
+
+      .device-tags {
+        position: absolute;
+        left: 5px;
+        top: 5px;
+        width: 5px;
+        background-color: red;
+        z-index: 98;
+      }
 
       &:hover {
         box-shadow:
@@ -140,6 +163,15 @@ const onDeviceChoose = (index: number) => {
           width: 100%;
           height: 105px;
           transition: all 0.5s;
+
+          &.img-gray {
+            -webkit-filter: grayscale(100%);
+            -moz-filter: grayscale(100%);
+            -ms-filter: grayscale(100%);
+            -o-filter: grayscale(100%);
+            filter: grayscale(100%);
+            filter: gray;
+          }
         }
 
         .operation-btns {
