@@ -1,4 +1,8 @@
-import { getAllContainers, getContainerDetailedInfoById } from '../../api/containerApi'
+import {
+  deleteContainerById,
+  getAllContainers,
+  getContainerDetailedInfoById
+} from '../../api/containerApi'
 import { Container, ContainerDetailedInfo } from '../../types/contianerApi'
 import { defineStore } from 'pinia'
 
@@ -16,6 +20,10 @@ export default defineStore('container', {
     async getContainerDetailedInfoAction(id: number) {
       const res = await getContainerDetailedInfoById(id)
       this.containerInfo = res.data
+    },
+    async deleteContainerAciton(id: number) {
+      const res = await deleteContainerById(id)
+      return res.data
     }
   },
   persist: true

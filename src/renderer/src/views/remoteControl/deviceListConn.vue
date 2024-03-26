@@ -2,6 +2,8 @@
 import { ref } from 'vue'
 import useStore from '../../store'
 import { useRouter } from 'vue-router'
+import { Message } from '@arco-design/web-vue'
+
 const router = useRouter()
 const { containerStore } = useStore()
 const choosedDeviceIndex = ref<number | null>(null)
@@ -28,6 +30,12 @@ const onConnectDesktop = async (id: number) => {
     path: '/linking',
     query: { url: 'http://192.168.1.103' + containerStore.containerInfo.accessUrl }
   })
+}
+// 删除容器
+const onDelete = async (id: number) => {
+  const res = await containerStore.deleteContainerAciton(id)
+  Message.info(res)
+  await containerStore.getContainerListAciton()
 }
 
 // init
@@ -77,7 +85,14 @@ containerStore.getContainerListAciton()
           >
             {{ item.name }}
           </a-typography-paragraph>
-          <div class="device-more"><icon-more :rotate="90" /></div>
+          <div class="device-more">
+            <a-dropdown>
+              <icon-more :rotate="90" />
+              <template #content>
+                <a-doption size="large" @click="onDelete(item.id)">删除</a-doption>
+              </template>
+            </a-dropdown>
+          </div>
         </div>
       </div>
     </div>
