@@ -8,6 +8,12 @@ const api = {
   },
   closeApp: () => {
     ipcRenderer.send('close-app')
+  },
+  resizeFullWindow: () => {
+    ipcRenderer.send('resize-full-window')
+  },
+  resizeCommonWindow: () => {
+    ipcRenderer.send('resize-common-window')
   }
 }
 

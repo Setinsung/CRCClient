@@ -6,6 +6,8 @@ declare global {
     api: {
       minApp: () => void
       closeApp: () => void
+      resizeFullWindow: () => void
+      resizeCommonWindow: () => void
     }
   }
 }
