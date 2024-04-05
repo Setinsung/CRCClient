@@ -1,4 +1,5 @@
 import axios, { AxiosError } from 'axios'
+import { Message } from '@arco-design/web-vue'
 
 const baseURL = 'http://192.168.1.103:8080'
 const myaxios = axios.create({
@@ -31,6 +32,8 @@ myaxios.interceptors.response.use(
       }
     }
     console.log(`response-error，message: ${error.message}  `, error)
+    console.log('Message', Message)
+    Message.error('请求失败，Error: ' + error)
     return Promise.reject(error)
   }
 )
