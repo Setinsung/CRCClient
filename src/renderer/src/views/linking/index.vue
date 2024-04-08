@@ -40,6 +40,7 @@ const minimize = () => {
         <icon-menu class="drop-down-ico" />
       </div>
     </div>
+    <FloatingMenu></FloatingMenu>
     <iframe class="iframe" :src="remote_url" frameborder="0"></iframe>
   </div>
 </template>

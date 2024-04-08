@@ -28,6 +28,7 @@
     "electron-updater": "^6.1.7",
     "pinia": "^2.1.7",
     "pinia-plugin-persistedstate": "^3.2.1",
+    "vue-float-menu": "^1.9.1",
     "vue-router": "^4.3.0"
   },
   "devDependencies": {
