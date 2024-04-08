@@ -26,7 +26,6 @@ const router = createRouter({
             }
           ]
         },
-        { path: 'terminalConn', component: () => import('../views/terminalConn/index.vue') },
         { path: 'settings', component: () => import('../views/settings/index.vue') }
       ]
     }

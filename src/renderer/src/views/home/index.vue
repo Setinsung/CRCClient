@@ -1,9 +1,24 @@
 <script setup lang="ts">
+import { useRouter } from 'vue-router'
+import useStore from '../../store'
+const router = useRouter()
+
+const { userStore } = useStore()
 const minimize = () => {
   window.api.minApp()
 }
 const close = () => {
   window.api.closeApp()
+}
+
+const goToLogin = () => {
+  if (userStore.userName !== '') {
+    console.log('1')
+  } else {
+    router.push({
+      path: '/login'
+    })
+  }
 }
 </script>
 
@@ -28,20 +43,16 @@ const close = () => {
     </div>
     <div class="content">
       <div class="left-zone">
-        <div class="user">
+        <div class="user" @click="goToLogin">
           <a-avatar :size="64" :style="{ backgroundColor: '#3370ff' }">
             <icon-user />
           </a-avatar>
-          <div class="name">立即登录</div>
+          <div class="name">{{ userStore.userName == '' ? '立即登录' : userStore.userName }}</div>
         </div>
         <div class="nav">
           <router-link ondragstart="return false" to="/home/remoteControl">
             <icon-computer size="22" />
             <span>远程连接</span>
-          </router-link>
-          <router-link to="/home/terminalConn">
-            <icon-code-square size="22" />
-            <span>终端连接</span>
           </router-link>
           <router-link to="/home/settings">
             <icon-settings size="22" />
@@ -49,10 +60,10 @@ const close = () => {
           </router-link>
           <div class="background-animation"></div>
         </div>
-        <div class="connect-state">
+        <!-- <div class="connect-state">
           <icon-sync size="16" spin />
           <span>正在连接服务器...</span>
-        </div>
+        </div> -->
       </div>
       <router-view class="right-zone"></router-view>
     </div>

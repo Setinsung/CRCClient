@@ -14,6 +14,9 @@ const api = {
   },
   resizeCommonWindow: () => {
     ipcRenderer.send('resize-common-window')
+  },
+  resizeLoginWindow: () => {
+    ipcRenderer.send('resize-login-window')
   }
 }
 

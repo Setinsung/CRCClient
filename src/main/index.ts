@@ -115,7 +115,17 @@ app.whenReady().then(() => {
   ipcMain.on('resize-full-window', () => {
     const currentWindow = BrowserWindow.getFocusedWindow()
     if (currentWindow) {
+      currentWindow.setMinimumSize(771, 545)
       currentWindow.setSize(1280, 768)
+      currentWindow.center()
+    }
+  })
+
+  ipcMain.on('resize-login-window', () => {
+    const currentWindow = BrowserWindow.getFocusedWindow()
+    if (currentWindow) {
+      currentWindow.setMinimumSize(320, 440)
+      currentWindow.setSize(320, 440)
       currentWindow.center()
     }
   })
@@ -123,6 +133,7 @@ app.whenReady().then(() => {
   ipcMain.on('resize-common-window', () => {
     const currentWindow = BrowserWindow.getFocusedWindow()
     if (currentWindow) {
+      currentWindow.setMinimumSize(771, 545)
       currentWindow.setSize(771, 545)
       currentWindow.center()
     }

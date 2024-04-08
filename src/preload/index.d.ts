@@ -8,6 +8,7 @@ declare global {
       closeApp: () => void
       resizeFullWindow: () => void
       resizeCommonWindow: () => void
+      resizeLoginWindow: () => void
     }
   }
 }
