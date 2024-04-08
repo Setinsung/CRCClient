@@ -9,6 +9,7 @@ declare global {
       resizeFullWindow: () => void
       resizeCommonWindow: () => void
       resizeLoginWindow: () => void
+      openExternalUrl: (url: string) => void
     }
   }
 }

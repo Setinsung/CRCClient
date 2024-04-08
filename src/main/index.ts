@@ -139,6 +139,11 @@ app.whenReady().then(() => {
     }
   })
 
+  // 打开外部url
+  ipcMain.on('open-url', (event, url) => {
+    shell.openExternal(url)
+  })
+
   // createWindow()
   createLoadingWindow(createWindow)
 

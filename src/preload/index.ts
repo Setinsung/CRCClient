@@ -17,6 +17,9 @@ const api = {
   },
   resizeLoginWindow: () => {
     ipcRenderer.send('resize-login-window')
+  },
+  openExternalUrl: (url: string) => {
+    ipcRenderer.send('open-url', url)
   }
 }
 

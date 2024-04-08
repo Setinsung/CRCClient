@@ -2,7 +2,7 @@ import { createRouter, createWebHashHistory } from 'vue-router'
 const router = createRouter({
   history: createWebHashHistory(),
   routes: [
-    { path: '/', redirect: '/home/remoteControl' },
+    { path: '/', redirect: '/login' },
     { path: '/login', component: () => import('../views/login/index.vue') },
     { path: '/loading', component: () => import('../views/loading/index.vue') },
     { path: '/linking', component: () => import('../views/linking/index.vue') },
