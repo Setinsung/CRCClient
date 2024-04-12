@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import { reactive, ref } from 'vue'
+import { useRouter } from 'vue-router'
+const router = useRouter()
 const paramsItem = ref(1)
 const settingsInfo = reactive({
   startupSetting: false,
@@ -8,6 +10,11 @@ const settingsInfo = reactive({
 })
 const switchSettingItem = (index: number) => {
   paramsItem.value = index
+}
+const onGoToAbout = () => {
+  router.push({
+    path: '/home/about'
+  })
 }
 </script>
 
@@ -35,7 +42,7 @@ const switchSettingItem = (index: number) => {
         </p>
         <p class="update-version">当前版本&nbsp;<span>V0.5.0</span></p>
       </div>
-      <div class="params-content-item about-setting">
+      <div class="params-content-item about-setting" @click="onGoToAbout">
         <h4>关于</h4>
         <p><icon-launch />&nbsp;<span>了解云舟</span></p>
       </div>
