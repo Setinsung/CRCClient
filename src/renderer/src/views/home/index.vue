@@ -103,9 +103,17 @@ const onLogout = () => {
             <icon-computer size="22" />
             <span>远程连接</span>
           </router-link>
+          <router-link to="/home/terminalControl">
+            <icon-code-square size="22" />
+            <span>终端连接</span>
+          </router-link>
           <router-link to="/home/settings">
             <icon-settings size="22" />
             <span>参数设置</span>
+          </router-link>
+          <router-link to="/home/about">
+            <icon-question-circle size="22" />
+            <span>关于我们</span>
           </router-link>
           <div class="background-animation"></div>
         </div>
@@ -250,6 +258,10 @@ const onLogout = () => {
           top: 108px;
         }
 
+        &:nth-child(4):hover ~ .background-animation {
+          top: 156px;
+        }
+
         &:nth-child(1).router-link-active ~ .background-animation {
           top: 11px;
         }
@@ -260,6 +272,10 @@ const onLogout = () => {
 
         &:nth-child(3).router-link-active ~ .background-animation {
           top: 108px;
+        }
+
+        &:nth-child(4).router-link-active ~ .background-animation {
+          top: 156px;
         }
 
         span {

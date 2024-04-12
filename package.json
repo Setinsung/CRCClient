@@ -29,7 +29,8 @@
     "pinia": "^2.1.7",
     "pinia-plugin-persistedstate": "^3.2.1",
     "vue-float-menu": "^1.9.1",
-    "vue-router": "^4.3.0"
+    "vue-router": "^4.3.0",
+    "vue-web-terminal": "^3.2.5"
   },
   "devDependencies": {
     "@arco-design/web-vue": "^2.54.6",
