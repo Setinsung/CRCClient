@@ -140,7 +140,7 @@ app.whenReady().then(() => {
   })
 
   // 打开外部url
-  ipcMain.on('open-url', (event, url) => {
+  ipcMain.on('open-url', (_, url) => {
     shell.openExternal(url)
   })
 

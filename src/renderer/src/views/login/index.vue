@@ -53,8 +53,7 @@ const onLogin = () => {
     </div>
     <div class="login-form">
       <div class="logo">
-        <img class="logo-ico" src="../../assets/images/icon.png" alt="" />
-        <img class="logo-font" src="../../assets/images/icon_font.png" alt="" />
+        <img class="logo-ico" src="../../assets/images/icon_font.png" alt="" />
       </div>
       <a-input
         v-model="loginForm.userName"
@@ -104,7 +103,7 @@ const onLogin = () => {
       margin-top: 35px;
 
       .logo-ico {
-        width: 60px;
+        width: 240px;
       }
 
       .logo-font {

@@ -12,7 +12,6 @@
     </div>
     <div class="logo">
       <img class="logo-ico" src="../../assets/images/icon.png" alt="" />
-      <img class="logo-font" src="../../assets/images/icon_font.png" alt="" />
     </div>
     <div class="tips">载入中<span class="dot">...</span></div>
   </div>

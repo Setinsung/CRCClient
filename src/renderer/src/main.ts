@@ -14,7 +14,7 @@ const pinia = createPinia()
 pinia.use(piniaPluginPersistedstate)
 const app = createApp(App)
 Message._context = app._context
-app.use(Terminal)
+app.use(Terminal as never)
 app.use(pinia)
 app.use(router)
 app.use(ArcoVueIcon)

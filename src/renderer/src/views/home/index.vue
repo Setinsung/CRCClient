@@ -28,9 +28,12 @@ const onGoToWebSite = () => {
 const onLogout = () => {
   userStore.userName = ''
   userInfoModelVisible.value = false
-  router.push({
-    path: '/login'
-  })
+}
+const capitalizeFirstChar = (str: string) => {
+  if (!str) return ''
+  const firstChar = str.charAt(0)
+  if (/^[A-Za-z]/.test(firstChar)) return firstChar.toUpperCase()
+  else return firstChar
 }
 </script>
 
@@ -38,8 +41,7 @@ const onLogout = () => {
   <div class="home">
     <div class="window-bar">
       <div class="logo">
-        <img class="logo-ico" src="../../assets/images/icon.png" alt="" />
-        <img class="logo-font" src="../../assets/images/icon_font.png" alt="" />
+        <img class="logo-ico" src="../../assets/images/icon_font.png" alt="" />
       </div>
       <div class="window-ctls">
         <div class="blank-place"></div>
@@ -71,7 +73,7 @@ const onLogout = () => {
         >
           <span :style="{ display: 'flex', alignItems: 'center', color: '#1D2129' }">
             <a-avatar :style="{ marginRight: '8px', backgroundColor: '#165DFF' }" :size="28">
-              A
+              {{ capitalizeFirstChar(userStore.userName) }}
             </a-avatar>
             <a-typography-text>{{ userStore.userName }}</a-typography-text>
           </span>
@@ -148,7 +150,7 @@ const onLogout = () => {
     -webkit-app-region: drag;
 
     .logo-ico {
-      height: 30px;
+      height: 40px;
     }
 
     .logo-font {
