@@ -5,7 +5,7 @@ import { ref } from 'vue'
 const router = useRouter()
 const userInfoModelVisible = ref(false)
 
-const { userStore } = useStore()
+const { userStore, containerStore } = useStore()
 const minimize = () => {
   window.api.minApp()
 }
@@ -119,10 +119,19 @@ const capitalizeFirstChar = (str: string) => {
           </router-link>
           <div class="background-animation"></div>
         </div>
-        <!-- <div class="connect-state">
+
+        <div v-if="containerStore.bottomloadingMark === 1" class="connect-state">
           <icon-sync size="16" spin />
           <span>正在连接服务器...</span>
-        </div> -->
+        </div>
+        <div v-else-if="containerStore.bottomloadingMark === 2" class="connect-state">
+          <icon-check-circle size="16" />
+          <span>服务器连接成功</span>
+        </div>
+        <div v-else-if="containerStore.bottomloadingMark === 0" class="connect-state">
+          <icon-close-circle size="16" />
+          <span>服务器连接失败</span>
+        </div>
       </div>
       <router-view class="right-zone"></router-view>
     </div>
@@ -309,8 +318,19 @@ const capitalizeFirstChar = (str: string) => {
       bottom: 0;
       user-select: none;
 
+      span {
+        margin-left: 2px;
+      }
+
       .arco-icon-sync {
         color: #5272ff;
+      }
+
+      .arco-icon-check-circle {
+        color: #00b106;
+      }
+      .arco-icon-close-circle {
+        color: #ff4017;
       }
     }
   }

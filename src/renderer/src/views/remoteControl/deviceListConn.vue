@@ -7,7 +7,7 @@ import { Message } from '@arco-design/web-vue'
 const router = useRouter()
 const { containerStore } = useStore()
 const choosedDeviceIndex = ref<number | null>(null)
-
+const isLoadingList = ref(false)
 // 容器选中
 const onDeviceChoose = (index: number, state: string) => {
   if (state !== 'Running') return
@@ -38,16 +38,50 @@ const onDelete = async (id: number) => {
   await containerStore.getContainerListAciton()
 }
 
+const onRefreshList = async () => {
+  isLoadingList.value = true
+  containerStore.bottomloadingMark = 1
+  try {
+    await containerStore.getContainerListAciton()
+  } catch (error) {
+    containerStore.bottomloadingMark = 0
+    return
+  } finally {
+    isLoadingList.value = false
+  }
+  containerStore.bottomloadingMark = 2
+}
+
 // init
-containerStore.getContainerListAciton()
+const initContainerList = async () => {
+  containerStore.bottomloadingMark = 1
+  try {
+    await containerStore.getContainerListAciton()
+  } catch (error) {
+    containerStore.bottomloadingMark = 0
+    return
+  }
+  containerStore.bottomloadingMark = 2
+}
+initContainerList()
 </script>
 <template>
   <div class="content">
-    <div class="device-type">
+    <div class="deivice-list-operations">
       <a-radio-group v-model="containerStore.devicesMode">
         <a-radio :default-checked="true" value="1">全部设备</a-radio>
         <a-radio value="2">历史设备</a-radio>
       </a-radio-group>
+
+      <a-button
+        class="refresh-btn"
+        status="success"
+        :loading="isLoadingList"
+        @click="onRefreshList"
+      >
+        刷新
+        <template #icon> <icon-refresh /> </template>
+      </a-button>
     </div>
     <div class="device-list">
       <div
@@ -109,8 +143,11 @@ containerStore.getContainerListAciton()
   flex-direction: column;
   margin-top: 20px;
 
-  .device-type {
+  .deivice-list-operations {
     margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    margin-right: 60px;
   }
 
   .device-list {
